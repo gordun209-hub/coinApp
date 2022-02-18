@@ -54,27 +54,30 @@ export default function StickyHeadTable() {
       name: coin.name,
       rank: coin.rank,
       price: coin.price.toFixed(6),
-      icon: <img src={coin.icon} />,
+      icon: <img src={coin.icon} alt={coin.name} style={{ width: "65px" }} />,
     };
   });
   const [filterCoins, setFilterCoins] = React.useState("");
-  const filteredCoins = coins.filter((coin) => {
+  const filteredCoins = coinData.filter((coin) => {
     return coin.name.toLowerCase().includes(filterCoins.toLowerCase());
   });
   return (
     <>
-      <label>Filter coins </label>
-      <input
-        value={filterCoins}
-        onChange={(e) => setFilterCoins(e.target.value)}
-      />
-      <button
-        variant="contained"
-        onClick={() => dispatch(getCoins())}
-        color="success"
-      >
-        refresh coins
-      </button>
+      <div style={{ margin: "15px", paddingLeft: "10px" }}>
+        <label>Filter coins </label>
+        <input
+          value={filterCoins}
+          onChange={(e) => setFilterCoins(e.target.value)}
+        />
+        <button
+          style={{ marginLeft: "20px" }}
+          variant="contained"
+          onClick={() => dispatch(getCoins())}
+          color="success"
+        >
+          refresh coins
+        </button>
+      </div>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
         <TableContainer sx={{ maxHeight: 740 }}>
           <Table stickyHeader aria-label="sticky table">
