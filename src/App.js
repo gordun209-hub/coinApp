@@ -1,57 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import {useDispatch, useSelector} from "react-redux";
+import {getCoins} from "./redux/coins";
 
 function App() {
+    const dispatch = useDispatch()
+
+  const [showMore,setShowMore] = React.useState(false)
+const status = useSelector(state=>state.reducer.status)
+  const coins = useSelector(state=>state.reducer.coins)
+  const handleClick = (coinId) => {
+    setShowMore(!showMore)
+    console.log(coinId)
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    < >
+    <button onClick={() => dispatch(getCoins())}>Get Coins</button>
+    <ul>
+      {status === 'loading' && <li>Loading...</li>}
+      {status === 'error' && <li>Error!</li>}
+      {status === 'success' && coins.map(coin =>
+          <div>
+<img src={coin.icon} style={{width:'40px'}} alt=""/>
+            <li key={coin.id}>name :{coin.name} price: {coin.price.toFixed(3)}</li>
+          <button onClick={()=>handleClick(coin.id)}>{showMore?'showLess':'showMore'}</button>
+          </div>)}
+
+    </ul>
+    </>
   );
 }
 
