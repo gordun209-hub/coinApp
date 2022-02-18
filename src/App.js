@@ -1,7 +1,7 @@
 import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {getCoins} from "./redux/coins";
-
+import Spinner from "./components/Spinner";
 function App() {
     const dispatch = useDispatch()
 
@@ -16,7 +16,7 @@ const status = useSelector(state=>state.reducer.status)
     < >
     <button onClick={() => dispatch(getCoins())}>Get Coins</button>
     <ul>
-      {status === 'loading' && <li>Loading...</li>}
+      {status === 'loading' &&<Spinner/> }
       {status === 'error' && <li>Error!</li>}
       {status === 'success' && coins.map(coin =>
           <div>
