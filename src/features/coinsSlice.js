@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import fetchCoins from "../redux/coinStatsAPI";
+import fetchCoins from "../api/coinStatsAPI";
 
 export const getCoins = createAsyncThunk('coins/getCoins',async()=>{
     const coins = await fetchCoins()
